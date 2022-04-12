@@ -2,7 +2,7 @@ package com.innova.project.application.controller;
 
 import com.innova.project.application.dto.input.PasswordAskDTO;
 import com.innova.project.application.dto.output.PasswordReplyDTO;
-import com.innova.project.application.service.ValidPasswordService;
+import com.innova.project.application.service.PasswordService;
 import com.innova.project.core.response.ResponseDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "valid password")
 @RestController("/password/validation")
 @RequiredArgsConstructor
-public class ValidPasswordController {
+public class PasswordController {
 
-    private final ValidPasswordService ValidpasswordService;
+    private final PasswordService validpasswordService;
 
     @PostMapping()
     public ResponseDTO<PasswordReplyDTO> validPassword(

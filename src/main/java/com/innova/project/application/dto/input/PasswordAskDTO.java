@@ -11,5 +11,6 @@ public class PasswordAskDTO {
 
     private String password;
     private Integer encrypt;
+    private String key;
 
 }

@@ -1,8 +1,11 @@
 package com.innova.project.application.service;
 
+import com.innova.project.application.dto.input.PasswordAskDTO;
+import com.innova.project.application.dto.output.PasswordReplyDTO;
 import com.innova.project.domain.service.impl.ValidPasswordServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service
 @RequiredArgsConstructor
@@ -10,17 +13,22 @@ public class PasswordService {
 
     private final ValidPasswordServiceImpl validPasswordServiceImpl;
 
-    public Boolean isPass(String password, String key){
+    public PasswordReplyDTO isPass(PasswordAskDTO dto) {
 
         //TODO decode password
+        String decode = decodePassword(dto.getPassword(), dto.getKey());
 
-        String decode = decodePassword(password, key);
-        if (null == decode) return false;
+        Assert.isNull(decode, "innova.password.valid.fail");
 
-        //TODO response interface
-        return validContainSequence(password) &&
-                validDigitsOrLowerCaseLetter(password) &&
-                ValidEnoughLength(password);
+        Boolean isPass = validContainSequence(dto.getPassword()) &&
+                validDigitsOrLowerCaseLetter(dto.getPassword()) &&
+                ValidEnoughLength(dto.getPassword());
+
+        return new PasswordReplyDTO(
+                isPass,
+                dto.getEncrypt(),
+                dto.getPassword()
+        );
 
     }
 

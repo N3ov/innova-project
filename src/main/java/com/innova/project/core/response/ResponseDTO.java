@@ -1,15 +1,20 @@
 package com.innova.project.core.response;
 
-import lombok.AllArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ResponseDTO<T> {
+@Schema
+public class ResponseDTO<T> implements Serializable {
 
-    private T data;
+    private final T data;
+
+    public ResponseDTO(T data) {
+        this.data = data;
+    }
+
 }

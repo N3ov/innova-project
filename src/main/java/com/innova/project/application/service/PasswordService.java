@@ -16,7 +16,8 @@ public class PasswordService {
 
         Boolean isPass = validContainSequence(dto.getPassword()) &&
                 validRegex(dto.getPassword()) &&
-                ValidEnoughLength(dto.getPassword());
+                validEnoughLength(dto.getPassword()) &&
+                validNumericOrLowerLetters(dto.getPassword());
 
         return new PasswordReplyDTO(
                 isPass
@@ -24,7 +25,11 @@ public class PasswordService {
 
     }
 
-    private Boolean ValidEnoughLength(String password) {
+    private Boolean validNumericOrLowerLetters(String password) {
+        return validPasswordService.isNumericOrLowerLetters(password);
+    }
+
+    private Boolean validEnoughLength(String password) {
         return validPasswordService.isEnoughLength(password);
     }
 

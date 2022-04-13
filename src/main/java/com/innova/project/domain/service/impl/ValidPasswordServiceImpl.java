@@ -36,4 +36,14 @@ public class ValidPasswordServiceImpl implements ValidPasswordService {
                 collect(Collectors.toSet());
         return characterSet.size() == password.length();
     }
+
+    @Override
+    public Boolean isNumericOrLowerLetters(@NotBlank String password) {
+
+        char[] pd = password.toCharArray();
+        for (char c : pd) {
+             if(!Character.isLowerCase(c) && !Character.isDigit(c)) return false;
+        }
+        return true;
+    }
 }

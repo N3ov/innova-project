@@ -1,4 +1,4 @@
-package com.innova.project.domain.service;
+package com.innova.project.domain.service.impl;
 
 import com.innova.project.domain.service.impl.ValidPasswordServiceImpl;
 import org.junit.jupiter.api.*;
@@ -10,7 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
-class ValidPasswordServiceTest {
+class ValidPasswordServiceImplTest {
     @InjectMocks
     ValidPasswordServiceImpl validPasswordService;
     @BeforeEach
@@ -49,6 +49,12 @@ class ValidPasswordServiceTest {
             assertEquals(true, result);
         }
 
+        @Test
+        void if_password_has_special_character() {
+            String password = "!32kdi9";
+            assertEquals(true, validPasswordService.isRegex(password));
+        }
+
     }
 
     @Nested
@@ -82,7 +88,15 @@ class ValidPasswordServiceTest {
     @Nested
     class when_valid_password_contain_sequence {
         @Test
-        void isContainSequence() {
+        void if_password_no_repeated_subString() {
+            String password = "a123wish";
+            assertEquals(true, validPasswordService.isNotRepeatedSequence(password));
+        }
+
+        @Test
+        void if_password_has_repeated_subString(){
+            String password = "123123iao";
+            assertEquals(false, validPasswordService.isNotRepeatedSequence(password));
         }
     }
 

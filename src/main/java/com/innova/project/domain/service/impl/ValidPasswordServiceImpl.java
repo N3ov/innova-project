@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class ValidPasswordServiceImpl implements ValidPasswordService {
 
     private static final String DIGITS_AND_LOWER_CASE_REG = "^(?=.*[a-z])(?=.*?\\d).{5,12}";
+
     @Override
     public Boolean isRegex(@NotBlank String password) {
         Pattern pattern = Pattern.compile(DIGITS_AND_LOWER_CASE_REG);
@@ -30,7 +31,7 @@ public class ValidPasswordServiceImpl implements ValidPasswordService {
     }
 
     @Override
-    public Boolean isContainSequence(@NotBlank String password) {
+    public Boolean isNotRepeatedSequence(@NotBlank String password) {
         Set<Character> characterSet = password.chars().
                 mapToObj(i -> (char) i).
                 collect(Collectors.toSet());
@@ -42,7 +43,7 @@ public class ValidPasswordServiceImpl implements ValidPasswordService {
 
         char[] pd = password.toCharArray();
         for (char c : pd) {
-             if(!Character.isLowerCase(c) && !Character.isDigit(c)) return false;
+            if (!Character.isLowerCase(c) && !Character.isDigit(c)) return false;
         }
         return true;
     }

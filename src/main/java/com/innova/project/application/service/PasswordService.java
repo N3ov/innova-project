@@ -38,7 +38,7 @@ public class PasswordService {
     }
 
     private Boolean validContainSequence(String password) {
-        return validPasswordService.isContainSequence(password);
+        return validPasswordService.isNotRepeatedSequence(password);
     }
 
 }

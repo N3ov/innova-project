@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PasswordController {
 
-    private final PasswordService validpasswordService;
+    private final PasswordService validPasswordService;
 
     @PostMapping()
     public ResponseDTO<PasswordReplyDTO> validPassword(
             @RequestBody PasswordAskDTO dto
     ) {
         return new ResponseDTO<>(
-                null
+                validPasswordService.isPass(dto)
         );
     }
 

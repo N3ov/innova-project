@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 public class PasswordReplyDTO {
 
-    private Integer validStatus;
+    private Boolean validStatus = false;
     private Integer encrypt;
     private String password;
 }

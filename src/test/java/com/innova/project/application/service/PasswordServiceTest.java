@@ -1,9 +1,7 @@
 package com.innova.project.application.service;
 
 import com.innova.project.application.dto.input.PasswordAskDTO;
-import com.innova.project.application.dto.output.PasswordReplyDTO;
 import com.innova.project.domain.service.impl.ValidPasswordServiceImpl;
-import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

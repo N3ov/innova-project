@@ -25,4 +25,6 @@ http://localhost:8081/swagger-ui/index.html#
 
 3. Find `pom.xml` and download dependency from `Maven`
 
-4. Run the `ProjectApplication`
+4. Run the `ProjectApplication` on the IDEA or
+
+using Maven Plugin `mvn spring-boot: run`

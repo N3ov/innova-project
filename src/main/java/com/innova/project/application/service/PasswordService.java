@@ -5,14 +5,19 @@ import com.innova.project.application.dto.output.PasswordReplyDTO;
 import com.innova.project.domain.service.ValidPasswordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class PasswordService {
 
     private final ValidPasswordService validPasswordService;
 
-    public PasswordReplyDTO isPass(PasswordAskDTO dto) {
+    @Validated
+    public PasswordReplyDTO isPass(@Valid PasswordAskDTO dto) {
 
         Boolean isPass = validContainSequence(dto.getPassword()) &&
                 validRegex(dto.getPassword()) &&
@@ -22,7 +27,6 @@ public class PasswordService {
         return new PasswordReplyDTO(
                 isPass
         );
-
     }
 
     private Boolean validNumericOrLowerLetters(String password) {
@@ -38,7 +42,7 @@ public class PasswordService {
     }
 
     private Boolean validContainSequence(String password) {
-        return validPasswordService.isContainSequence(password);
+        return validPasswordService.isNotRepeatedSequence(password);
     }
 
 }

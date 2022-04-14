@@ -1,6 +1,5 @@
-package com.innova.project.domain.service;
+package com.innova.project.domain.service.impl;
 
-import com.innova.project.domain.service.impl.ValidPasswordServiceImpl;
 import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -8,15 +7,18 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(MockitoJUnitRunner.class)
-class ValidPasswordServiceTest {
+class ValidPasswordServiceImplTest {
     @InjectMocks
     ValidPasswordServiceImpl validPasswordService;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
     @Nested
     @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
     class when_valid_password_is_regex {
@@ -49,9 +51,22 @@ class ValidPasswordServiceTest {
             assertEquals(true, result);
         }
 
+        @Test
+        void if_password_has_special_character() {
+            String password = "!32kdi9";
+            assertEquals(true, validPasswordService.isRegex(password));
+        }
+
+        @Test
+        void if_password_is_null() {
+            assertThrows(NullPointerException.class, () -> {
+                validPasswordService.isRegex(null);
+            });
+        }
     }
 
     @Nested
+    @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
     class when_valid_password_length {
         String setUp(int length) {
             StringBuilder password = new StringBuilder();
@@ -60,18 +75,21 @@ class ValidPasswordServiceTest {
             }
             return password.toString();
         }
+
         @Test
         void if_password_length_over_12() {
             String password = setUp(14);
             assertEquals(false, validPasswordService.isEnoughLength(password));
         }
+
         @Test
         void if_password_length_less_then_5() {
             String password = setUp(4);
-            assertEquals(false,validPasswordService.isEnoughLength(password));
+            assertEquals(false, validPasswordService.isEnoughLength(password));
         }
+
         @Test
-        void if_password_length_in_5_to_12(){
+        void if_password_length_in_5_to_12() {
             String pd5 = setUp(5);
             String pd12 = setUp(12);
             assertEquals(true, validPasswordService.isEnoughLength(pd5));
@@ -82,7 +100,15 @@ class ValidPasswordServiceTest {
     @Nested
     class when_valid_password_contain_sequence {
         @Test
-        void isContainSequence() {
+        void if_password_no_repeated_subString() {
+            String password = "a123wish";
+            assertEquals(true, validPasswordService.isNotRepeatedSequence(password));
+        }
+
+        @Test
+        void if_password_has_repeated_subString() {
+            String password = "123123iao";
+            assertEquals(false, validPasswordService.isNotRepeatedSequence(password));
         }
     }
 

@@ -1,18 +1,13 @@
 package com.innova.project.application.dto.input;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class PasswordAskDTO {
 
-    @NonNull
-    @NotBlank
+    @NotBlank(message = "password is necessary")
     private String password;
 
 }

@@ -8,7 +8,7 @@ public interface ValidPasswordService {
 
     Boolean isEnoughLength(@NotBlank String password);
 
-    Boolean isContainSequence(@NotBlank String password);
+    Boolean isNotRepeatedSequence(@NotBlank String password);
 
     Boolean isNumericOrLowerLetters(@NotBlank String password);
 

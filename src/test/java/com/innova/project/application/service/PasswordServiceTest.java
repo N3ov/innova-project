@@ -5,17 +5,15 @@ import com.innova.project.application.dto.output.PasswordReplyDTO;
 import com.innova.project.domain.service.impl.ValidPasswordServiceImpl;
 import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class PasswordServiceTest {
@@ -23,7 +21,7 @@ class PasswordServiceTest {
     @InjectMocks
     PasswordService passwordService;
 
-    @Mock
+    @Spy
     private ValidPasswordServiceImpl validPasswordService;
 
     @BeforeEach
@@ -37,18 +35,69 @@ class PasswordServiceTest {
         return dto;
     }
 
-    @Test
-    void if_password_can_be_passed() {
+    @Nested
+    class whe_valid_password {
+        @Test
+        void if_password_has_special_character_expect_invalid() {
+            String password = "a1!23wish";
+            PasswordAskDTO dto = setup(password);
+            PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
 
-//        String password = "a123wish";
-//        PasswordAskDTO dto = setup(password);
-//        given(validPasswordService.isNumericOrLowerLetters(anyString())).willReturn(true);
-//        given(validPasswordService.isEnoughLength(anyString())).willReturn(true);
-//        given(validPasswordService.isNotRepeatedSequence(anyString())).willReturn(true);
-//        given(validPasswordService.isNotRepeatedSequence(anyString())).willReturn(true);
-//        PasswordReplyDTO replyDTO = new PasswordReplyDTO(true);
-//        BDDAssertions.then(passwordService.isPass(dto)).isNotNull();
-//        then(validPasswordService).should().isNotRepeatedSequence(password);
+            PasswordReplyDTO result = passwordService.isPass(dto);
+            assertEquals(replyDTO.getIsPass(), result.getIsPass());
+            BDDAssertions.then(passwordService.isPass(dto)).isNotNull();
+        }
 
+        @Test
+        void if_password_has_uppercase_letters_expect_invalid() {
+            String password = "a1A23wish";
+            PasswordAskDTO dto = setup(password);
+            PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
+
+            PasswordReplyDTO result = passwordService.isPass(dto);
+
+            assertEquals(replyDTO.getIsPass(), result.getIsPass());
+            BDDAssertions.then(passwordService.isPass(dto)).isNotNull();
+        }
+
+        @Test
+        void if_password_has_all_numeric_expect_invalid() {
+            String password = "1234576";
+            PasswordAskDTO dto = setup(password);
+            PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
+
+            PasswordReplyDTO result = passwordService.isPass(dto);
+
+            assertEquals(replyDTO.getIsPass(), result.getIsPass());
+            BDDAssertions.then(passwordService.isPass(dto)).isNotNull();
+        }
+
+        @Test
+        void if_password_has_all_letters_expect_invalid() {
+            String password = "abkidjw";
+            PasswordAskDTO dto = setup(password);
+            PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
+
+            PasswordReplyDTO result = passwordService.isPass(dto);
+
+            assertEquals(replyDTO.getIsPass(), result.getIsPass());
+            BDDAssertions.then(passwordService.isPass(dto)).isNotNull();
+        }
+
+        @Test
+        void if_password_is_accept_except_valid() {
+
+            String password = "a123wish";
+            PasswordAskDTO dto = setup(password);
+            PasswordReplyDTO replyDTO = new PasswordReplyDTO(true);
+
+            PasswordReplyDTO result = passwordService.isPass(dto);
+
+            assertEquals(replyDTO.getIsPass(), result.getIsPass());
+            BDDAssertions.then(passwordService.isPass(dto)).isNotNull();
+
+        }
     }
+
+
 }

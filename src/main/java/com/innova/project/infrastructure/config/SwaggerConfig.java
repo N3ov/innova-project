@@ -36,6 +36,7 @@ public class SwaggerConfig {
                 .components(new Components());
     }
 
+    // TODO fix the schema json display.
     @Bean
     public OpenApiCustomiser customGlobalHeaderOpenApiCustomiser() {
         return openApi -> openApi.getPaths().values().forEach(

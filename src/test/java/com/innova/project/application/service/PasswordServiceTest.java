@@ -41,7 +41,7 @@ class PasswordServiceTest {
         void if_password_has_special_character_expect_invalid() {
             String password = "a1!23wish";
             PasswordAskDTO dto = setup(password);
-            PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
+            PasswordReplyDTO replyDTO = new PasswordReplyDTO();
 
             PasswordReplyDTO result = passwordService.verifyPassword(dto);
             assertEquals(replyDTO.getIsPass(), result.getIsPass());
@@ -52,7 +52,7 @@ class PasswordServiceTest {
         void if_password_has_uppercase_letters_expect_invalid() {
             String password = "a1A23wish";
             PasswordAskDTO dto = setup(password);
-            PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
+            PasswordReplyDTO replyDTO = new PasswordReplyDTO();
 
             PasswordReplyDTO result = passwordService.verifyPassword(dto);
 
@@ -64,7 +64,7 @@ class PasswordServiceTest {
         void if_password_has_all_numeric_expect_invalid() {
             String password = "1234576";
             PasswordAskDTO dto = setup(password);
-            PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
+            PasswordReplyDTO replyDTO = new PasswordReplyDTO();
 
             PasswordReplyDTO result = passwordService.verifyPassword(dto);
 
@@ -76,7 +76,7 @@ class PasswordServiceTest {
         void if_password_has_all_letters_expect_invalid() {
             String password = "abkidjw";
             PasswordAskDTO dto = setup(password);
-            PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
+            PasswordReplyDTO replyDTO = new PasswordReplyDTO();
 
             PasswordReplyDTO result = passwordService.verifyPassword(dto);
 
@@ -89,7 +89,7 @@ class PasswordServiceTest {
 
             String password = "a123wish";
             PasswordAskDTO dto = setup(password);
-            PasswordReplyDTO replyDTO = new PasswordReplyDTO(true);
+            PasswordReplyDTO replyDTO = new PasswordReplyDTO();
 
             PasswordReplyDTO result = passwordService.verifyPassword(dto);
 

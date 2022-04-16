@@ -37,8 +37,9 @@ class PasswordControllerTest {
         return dto;
     }
 
-    PasswordReplyDTO setUpOutput(boolean isPass) {
-        return new PasswordReplyDTO(isPass);
+    PasswordReplyDTO setUpOutput() {
+
+        return new PasswordReplyDTO(System.currentTimeMillis(), true);
     }
 
     @Nested
@@ -49,7 +50,7 @@ class PasswordControllerTest {
         void if_input_is_null_and_except_not_pass() throws Exception {
 
             PasswordAskDTO dto = setUpInput(null);
-            PasswordReplyDTO replyDTO = setUpOutput(false);
+            PasswordReplyDTO replyDTO = setUpOutput();
 
             given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 
@@ -66,7 +67,7 @@ class PasswordControllerTest {
         void if_input_is_blank_and_except_not_pass() throws Exception {
 
             PasswordAskDTO dto = setUpInput("");
-            PasswordReplyDTO replyDTO = setUpOutput(false);
+            PasswordReplyDTO replyDTO = setUpOutput();
 
             given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 
@@ -81,7 +82,7 @@ class PasswordControllerTest {
         void if_password_is_correct_and_except_pass() throws Exception {
 
             PasswordAskDTO dto = setUpInput("123jeiw");
-            PasswordReplyDTO replyDTO = setUpOutput(true);
+            PasswordReplyDTO replyDTO = setUpOutput();
 
             given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 
@@ -103,7 +104,7 @@ class PasswordControllerTest {
         void if_password_has_uppercase_letter_and_except_not_pass() throws Exception {
 
             PasswordAskDTO dto = setUpInput("123Ajeiw");
-            PasswordReplyDTO replyDTO = setUpOutput(false);
+            PasswordReplyDTO replyDTO = setUpOutput();
 
             given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 
@@ -126,7 +127,7 @@ class PasswordControllerTest {
         void if_password_has_same_letters_and_except_not_pass() throws Exception {
 
             PasswordAskDTO dto = setUpInput("kkaadajeiw");
-            PasswordReplyDTO replyDTO = setUpOutput(false);
+            PasswordReplyDTO replyDTO = setUpOutput();
 
             given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 
@@ -149,7 +150,7 @@ class PasswordControllerTest {
         void if_password_has_different_letters_and_except_not_pass() throws Exception {
 
             PasswordAskDTO dto = setUpInput("kdajeiw");
-            PasswordReplyDTO replyDTO = setUpOutput(false);
+            PasswordReplyDTO replyDTO = setUpOutput();
 
             given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 

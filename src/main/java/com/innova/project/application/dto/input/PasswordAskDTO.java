@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class PasswordAskDTO {
 
-    @NotBlank(message = "password is necessary")
+    @NotBlank(message = "password can't be null or blank")
     private String password;
 
 }

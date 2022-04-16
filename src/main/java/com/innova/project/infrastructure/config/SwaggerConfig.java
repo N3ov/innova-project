@@ -1,7 +1,9 @@
 package com.innova.project.infrastructure.config;
 
-import com.innova.project.infrastructure.exception.ResultErrors;
-import com.innova.project.infrastructure.exception.ResultFails;
+import com.innova.project.core.response.ResponseErrorDTO;
+import com.innova.project.core.response.ResponseFailDTO;
+import com.innova.project.core.swagger.ResultErrors;
+import com.innova.project.core.swagger.ResultFails;
 import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

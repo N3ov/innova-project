@@ -1,4 +1,4 @@
-package com.innova.project.infrastructure.exception;
+package com.innova.project.core.swagger;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -14,9 +14,10 @@ public class ResultFails {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     String message;
 
-    ResultFails(){}
+    ResultFails() {
+    }
 
-    public void clear(){
+    public void clear() {
         this.traceId = null;
         this.message = null;
     }

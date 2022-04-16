@@ -26,7 +26,7 @@ public class PasswordController {
             @Valid @RequestBody PasswordAskDTO dto
     ) {
         return new ResponseDTO<>(
-                validPasswordService.isPass(dto)
+                validPasswordService.verifyPassword(dto)
         );
     }
 

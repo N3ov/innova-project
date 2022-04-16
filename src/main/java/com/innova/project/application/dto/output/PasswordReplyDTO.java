@@ -9,6 +9,7 @@ import lombok.*;
 @ToString
 public class PasswordReplyDTO {
 
+    private Long validTime;
     private Boolean isPass;
 
 }

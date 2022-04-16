@@ -1,7 +1,9 @@
 package com.innova.project.application.service;
 
 import com.innova.project.application.dto.input.PasswordAskDTO;
+import com.innova.project.application.dto.output.PasswordReplyDTO;
 import com.innova.project.domain.service.impl.ValidPasswordServiceImpl;
+import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -41,9 +43,9 @@ class PasswordServiceTest {
             PasswordAskDTO dto = setup(password);
             PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
 
-            PasswordReplyDTO result = passwordService.isPass(dto);
+            PasswordReplyDTO result = passwordService.verifyPassword(dto);
             assertEquals(replyDTO.getIsPass(), result.getIsPass());
-            BDDAssertions.then(passwordService.isPass(dto)).isNotNull();
+            BDDAssertions.then(passwordService.verifyPassword(dto)).isNotNull();
         }
 
         @Test
@@ -52,10 +54,10 @@ class PasswordServiceTest {
             PasswordAskDTO dto = setup(password);
             PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
 
-            PasswordReplyDTO result = passwordService.isPass(dto);
+            PasswordReplyDTO result = passwordService.verifyPassword(dto);
 
             assertEquals(replyDTO.getIsPass(), result.getIsPass());
-            BDDAssertions.then(passwordService.isPass(dto)).isNotNull();
+            BDDAssertions.then(passwordService.verifyPassword(dto)).isNotNull();
         }
 
         @Test
@@ -64,10 +66,10 @@ class PasswordServiceTest {
             PasswordAskDTO dto = setup(password);
             PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
 
-            PasswordReplyDTO result = passwordService.isPass(dto);
+            PasswordReplyDTO result = passwordService.verifyPassword(dto);
 
             assertEquals(replyDTO.getIsPass(), result.getIsPass());
-            BDDAssertions.then(passwordService.isPass(dto)).isNotNull();
+            BDDAssertions.then(passwordService.verifyPassword(dto)).isNotNull();
         }
 
         @Test
@@ -76,10 +78,10 @@ class PasswordServiceTest {
             PasswordAskDTO dto = setup(password);
             PasswordReplyDTO replyDTO = new PasswordReplyDTO(false);
 
-            PasswordReplyDTO result = passwordService.isPass(dto);
+            PasswordReplyDTO result = passwordService.verifyPassword(dto);
 
             assertEquals(replyDTO.getIsPass(), result.getIsPass());
-            BDDAssertions.then(passwordService.isPass(dto)).isNotNull();
+            BDDAssertions.then(passwordService.verifyPassword(dto)).isNotNull();
         }
 
         @Test
@@ -89,10 +91,10 @@ class PasswordServiceTest {
             PasswordAskDTO dto = setup(password);
             PasswordReplyDTO replyDTO = new PasswordReplyDTO(true);
 
-            PasswordReplyDTO result = passwordService.isPass(dto);
+            PasswordReplyDTO result = passwordService.verifyPassword(dto);
 
             assertEquals(replyDTO.getIsPass(), result.getIsPass());
-            BDDAssertions.then(passwordService.isPass(dto)).isNotNull();
+            BDDAssertions.then(passwordService.verifyPassword(dto)).isNotNull();
 
         }
     }

@@ -51,7 +51,7 @@ class PasswordControllerTest {
             PasswordAskDTO dto = setUpInput(null);
             PasswordReplyDTO replyDTO = setUpOutput(false);
 
-            given(passwordService.isPass(dto)).willReturn(replyDTO);
+            given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 
             mockMvc.perform(
                     post(BASE_URL)
@@ -68,7 +68,7 @@ class PasswordControllerTest {
             PasswordAskDTO dto = setUpInput("");
             PasswordReplyDTO replyDTO = setUpOutput(false);
 
-            given(passwordService.isPass(dto)).willReturn(replyDTO);
+            given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 
             mockMvc.perform(
                     post(BASE_URL)
@@ -83,7 +83,7 @@ class PasswordControllerTest {
             PasswordAskDTO dto = setUpInput("123jeiw");
             PasswordReplyDTO replyDTO = setUpOutput(true);
 
-            given(passwordService.isPass(dto)).willReturn(replyDTO);
+            given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 
             mockMvc.perform(
                             post(BASE_URL)
@@ -105,7 +105,7 @@ class PasswordControllerTest {
             PasswordAskDTO dto = setUpInput("123Ajeiw");
             PasswordReplyDTO replyDTO = setUpOutput(false);
 
-            given(passwordService.isPass(dto)).willReturn(replyDTO);
+            given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 
             mockMvc.perform(
                     post(BASE_URL)
@@ -128,7 +128,7 @@ class PasswordControllerTest {
             PasswordAskDTO dto = setUpInput("kkaadajeiw");
             PasswordReplyDTO replyDTO = setUpOutput(false);
 
-            given(passwordService.isPass(dto)).willReturn(replyDTO);
+            given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 
             mockMvc.perform(
                     post(BASE_URL)
@@ -151,7 +151,7 @@ class PasswordControllerTest {
             PasswordAskDTO dto = setUpInput("kdajeiw");
             PasswordReplyDTO replyDTO = setUpOutput(false);
 
-            given(passwordService.isPass(dto)).willReturn(replyDTO);
+            given(passwordService.verifyPassword(dto)).willReturn(replyDTO);
 
             mockMvc.perform(
                     post(BASE_URL)

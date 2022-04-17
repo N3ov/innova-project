@@ -15,7 +15,7 @@ http://localhost:8081/swagger-ui/index.html#
 2. Maven 3.5 + 
 3. IntelliJ IDEA ULTIMATE 2021.3.3+
 
-# How to run application
+# Run Application
 
 1. Clone the project
 
@@ -27,4 +27,7 @@ http://localhost:8081/swagger-ui/index.html#
 
 4. Run the `ProjectApplication` on the IDEA or
 
-using Maven Plugin `mvn spring-boot: run`
+   using Maven Plugin `mvn spring-boot: run`
+   
+# Run Test
+  `mvn test`

@@ -5,7 +5,6 @@ import com.innova.project.application.dto.output.PasswordReplyDTO;
 import com.innova.project.domain.valid.PasswordValidation;
 import com.innova.project.infrastructure.exception.PasswordValidateException;
 import org.assertj.core.api.BDDAssertions;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,9 +19,9 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
@@ -51,8 +50,7 @@ class PasswordServiceTest {
 
     @Nested
     class when_valid_password {
-
-        private long currTime = random.nextLong();
+        private final long currTime = random.nextLong();
 
         @Test
         void if_password_has_correct_character_expect_pass() {
@@ -67,7 +65,7 @@ class PasswordServiceTest {
             BDDAssertions.then(unit.verifyPassword(dto)).isNotNull();
             then(passwordValidation).should(times(2))
                     .verify(eq(dto.getPassword()));
-            assertEquals(replyDTO.getIsPass(), result.getIsPass());
+            assertEquals(replyDTO.getVerified(), result.getVerified());
         }
 
         @Test
@@ -75,47 +73,34 @@ class PasswordServiceTest {
             String password = "a1!23wish";
             PasswordAskDTO dto = setup(password);
 
-            given(unit.verifyPassword(dto)).willThrow(PasswordValidateException.class);
-            BDDAssertions.thenThrownBy(() -> unit.verifyPassword(dto))
-                    .isInstanceOf(PasswordValidateException.class)
-                    .hasMessage("the password must consist of numerical digits and lowercase letters");
-            then(passwordValidation).shouldHaveNoMoreInteractions();
+            doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
+            assertThrows(PasswordValidateException.class, () -> unit.verifyPassword(dto));
         }
 
         @Test
         void if_password_has_uppercase_letters_expect_invalid() {
             String password = "a1A23wish";
             PasswordAskDTO dto = setup(password);
-            PasswordReplyDTO replyDTO = new PasswordReplyDTO();
 
-            PasswordReplyDTO result = unit.verifyPassword(dto);
-
-            assertEquals(replyDTO.getIsPass(), result.getIsPass());
-            BDDAssertions.then(unit.verifyPassword(dto)).isNotNull();
+            doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
+            assertThrows(PasswordValidateException.class, () -> unit.verifyPassword(dto));
         }
 
         @Test
         void if_password_has_all_numeric_expect_invalid() {
             String password = "1234576";
             PasswordAskDTO dto = setup(password);
-            PasswordReplyDTO replyDTO = new PasswordReplyDTO();
-
-            PasswordReplyDTO result = unit.verifyPassword(dto);
-
-            assertEquals(replyDTO.getIsPass(), result.getIsPass());
-            BDDAssertions.then(unit.verifyPassword(dto)).isNotNull();
+            doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
+            assertThrows(PasswordValidateException.class, () -> unit.verifyPassword(dto));
         }
 
         @Test
         void if_password_has_all_letters_expect_invalid() {
             String password = "abkidjw";
             PasswordAskDTO dto = setup(password);
-            PasswordReplyDTO replyDTO = new PasswordReplyDTO();
+            doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
+            assertThrows(PasswordValidateException.class, () -> unit.verifyPassword(dto));
 
-            PasswordReplyDTO result = unit.verifyPassword(dto);
-
-            assertEquals(replyDTO.getIsPass(), result.getIsPass());
-            BDDAssertions.then(unit.verifyPassword(dto)).isNotNull();
         }
 
         @Test
@@ -123,20 +108,15 @@ class PasswordServiceTest {
 
             String password = "a123wish";
             PasswordAskDTO dto = setup(password);
-            PasswordReplyDTO replyDTO = new PasswordReplyDTO();
-
-            PasswordReplyDTO result = unit.verifyPassword(dto);
-
-            assertEquals(replyDTO.getIsPass(), result.getIsPass());
-            BDDAssertions.then(unit.verifyPassword(dto)).isNotNull();
-
+            doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
+            assertThrows(PasswordValidateException.class, () -> unit.verifyPassword(dto));
         }
     }
 
     private PasswordReplyDTO setUpReplyDTO(long time, boolean verify) {
         PasswordReplyDTO replyDTO = new PasswordReplyDTO();
         replyDTO.setValidTime(time);
-        replyDTO.setIsPass(verify);
+        replyDTO.setVerified(verify);
         return replyDTO;
     }
 

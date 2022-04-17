@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static com.innova.project.domain.valid.PasswordTestFixture.*;
 import static com.innova.project.domain.valid.PasswordTestFixture.generatorMixturePassword;
 import static com.innova.project.infrastructure.exception.PasswordValidationErrorCode.PASSWORD_LENGTH_DOES_NOT_MATCH;
+import static com.innova.project.infrastructure.exception.PasswordValidationExceptionMessage.PASSWORD_LENGTH_DOES_NOT_MATCH_EXCEPTION;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -18,7 +19,7 @@ class ValidPasswordLengthTest {
     @Mock
     private ValidPasswordLength validPasswordLength;
 
-    private static final String EXCEPTION = "the password length must between 5 and 12";
+    private static final String EXCEPTION = PASSWORD_LENGTH_DOES_NOT_MATCH_EXCEPTION;
 
 
     @BeforeEach

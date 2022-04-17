@@ -10,6 +10,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static com.innova.project.infrastructure.exception.PasswordValidationErrorCode.PASSWORD_HAS_REPEATED_SEQUENCE;
+import static com.innova.project.infrastructure.exception.PasswordValidationExceptionMessage.PASSWORD_REPEATED_SEQUENCE_EXCEPTION;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -19,7 +20,7 @@ class ValidRepeatedSequenceTest {
     @Mock
     private ValidRepeatedSequence validRepeatedSequence;
 
-    private static final String EXCEPTION = "The password must can't contains the same sequence.";
+    private static final String EXCEPTION = PASSWORD_REPEATED_SEQUENCE_EXCEPTION;
 
     @BeforeEach
     void setUp() {

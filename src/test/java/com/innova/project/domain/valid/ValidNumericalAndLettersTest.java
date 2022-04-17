@@ -9,6 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static com.innova.project.domain.valid.PasswordTestFixture.*;
 import static com.innova.project.infrastructure.exception.PasswordValidationErrorCode.PASSWORD_MUST_CONSIST_OF_NUMERICAL_DIGITS_AND_LOWERCASE_LETTERS;
+import static com.innova.project.infrastructure.exception.PasswordValidationExceptionMessage.PASSWORD_NUMERICAL_DIGITS_AND_LOWERCASE_LETTERS_EXCEPTION;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -17,7 +18,7 @@ class ValidNumericalAndLettersTest {
     @Mock
     private ValidNumericalAndLetters validNumericalAndLetters;
 
-    private static final String EXCEPTION = "the password must consist of numerical digits and lowercase letters";
+    private static final String EXCEPTION = PASSWORD_NUMERICAL_DIGITS_AND_LOWERCASE_LETTERS_EXCEPTION;
 
 
     @BeforeEach

@@ -10,6 +10,6 @@ import lombok.*;
 public class PasswordReplyDTO {
 
     private Long validTime;
-    private Boolean isPass;
+    private Boolean verified;
 
 }

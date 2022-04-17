@@ -12,9 +12,7 @@ import java.util.Map;
 @Getter
 public class ResultErrors {
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    String traceId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    String code;
+    String errorCode;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     String message;
 
@@ -25,18 +23,16 @@ public class ResultErrors {
     ResultErrors(){}
 
     public void clear(){
-        this.traceId = null;
         this.message = null;
         this.errors = null;
     }
 
-    public ResultErrors traceId(String traceId) {
-        this.traceId = traceId;
+    public ResultErrors traceId() {
         return this;
     }
 
     public ResultErrors code(String code) {
-        this.code = code;
+        this.errorCode = code;
         return this;
     }
 

@@ -18,6 +18,8 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Random;
 
+import static com.innova.project.domain.valid.PasswordTestFixture.*;
+import static com.innova.project.infrastructure.exception.PasswordValidationExceptionMessage.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -49,12 +51,12 @@ class PasswordServiceTest {
     }
 
     @Nested
-    class when_valid_password {
+    class when_valid_password_passed {
         private final long currTime = random.nextLong();
 
         @Test
         void if_password_has_correct_character_expect_pass() {
-            String password = "a123wish";
+            String password = createCorrectPassword(5);
             PasswordAskDTO dto = setup(password);
             PasswordReplyDTO replyDTO = setUpReplyDTO(
                     currTime,
@@ -68,50 +70,105 @@ class PasswordServiceTest {
             assertEquals(replyDTO.getVerified(), result.getVerified());
         }
 
+    }
+
+    @Nested
+    class when_valid_password {
         @Test
         void if_password_has_special_character_expect_invalid() {
-            String password = "a1!23wish";
+            String password = createCorrectPassword(5)+"!";
             PasswordAskDTO dto = setup(password);
 
-            doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
-            assertThrows(PasswordValidateException.class, () -> unit.verifyPassword(dto));
+            doThrow(PasswordValidateException.class).when(passwordValidation)
+                    .verify(dto.getPassword());
+            assertThrows(
+                    PasswordValidateException.class,
+                    () -> unit.verifyPassword(dto),
+                    PASSWORD_NUMERICAL_DIGITS_AND_LOWERCASE_LETTERS_EXCEPTION
+            );
         }
 
         @Test
         void if_password_has_uppercase_letters_expect_invalid() {
-            String password = "a1A23wish";
+            String password = createUpperCaseLettersPassword(5);
             PasswordAskDTO dto = setup(password);
 
             doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
-            assertThrows(PasswordValidateException.class, () -> unit.verifyPassword(dto));
+            assertThrows(
+                    PasswordValidateException.class,
+                    () -> unit.verifyPassword(dto),
+                    PASSWORD_NUMERICAL_DIGITS_AND_LOWERCASE_LETTERS_EXCEPTION
+            );
         }
 
         @Test
         void if_password_has_all_numeric_expect_invalid() {
-            String password = "1234576";
+            String password = createNumericalPassword(5);
             PasswordAskDTO dto = setup(password);
-            doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
-            assertThrows(PasswordValidateException.class, () -> unit.verifyPassword(dto));
+            doThrow(PasswordValidateException.class).when(passwordValidation)
+                    .verify(dto.getPassword());
+            assertThrows(
+                    PasswordValidateException.class,
+                    () -> unit.verifyPassword(dto),
+                    PASSWORD_NUMERICAL_DIGITS_AND_LOWERCASE_LETTERS_EXCEPTION
+            );
         }
 
         @Test
         void if_password_has_all_letters_expect_invalid() {
-            String password = "abkidjw";
+            String password = createLowerLettersPassword(7);
             PasswordAskDTO dto = setup(password);
             doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
-            assertThrows(PasswordValidateException.class, () -> unit.verifyPassword(dto));
+            assertThrows(
+                    PasswordValidateException.class,
+                    () -> unit.verifyPassword(dto),
+                    PASSWORD_NUMERICAL_DIGITS_AND_LOWERCASE_LETTERS_EXCEPTION
+            );
+        }
+    }
 
+    @Nested
+    class valid_password_length {
+        @Test
+        void if_password_length_not_enough_and_expect_not_pass() {
+            String password = createCorrectPassword(3);
+            PasswordAskDTO dto = setup(password);
+            doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
+            assertThrows(
+                    PasswordValidateException.class,
+                    () -> unit.verifyPassword(dto),
+                    PASSWORD_LENGTH_DOES_NOT_MATCH_EXCEPTION
+            );
         }
 
         @Test
-        void if_password_is_accept_except_valid() {
-
-            String password = "a123wish";
+        void if_password_length_over_12_and_expect_not_pass() {
+            String password = createCorrectPassword(13);
             PasswordAskDTO dto = setup(password);
             doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
-            assertThrows(PasswordValidateException.class, () -> unit.verifyPassword(dto));
+            assertThrows(
+                    PasswordValidateException.class,
+                    () -> unit.verifyPassword(dto),
+                    PASSWORD_LENGTH_DOES_NOT_MATCH_EXCEPTION
+            );
         }
     }
+
+    @Nested
+    class valid_sequence {
+        @Test
+        void if_password_has_same_squence() {
+            String password = createCorrectPassword(4);
+            PasswordAskDTO dto = setup(password+password);
+            doThrow(PasswordValidateException.class).when(passwordValidation).verify(dto.getPassword());
+            assertThrows(
+                    PasswordValidateException.class,
+                    () -> unit.verifyPassword(dto),
+                    PASSWORD_REPEATED_SEQUENCE_EXCEPTION
+            );
+        }
+    }
+
 
     private PasswordReplyDTO setUpReplyDTO(long time, boolean verify) {
         PasswordReplyDTO replyDTO = new PasswordReplyDTO();

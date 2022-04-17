@@ -45,9 +45,7 @@ class PasswordServiceTest {
     }
 
     PasswordAskDTO setup(String password) {
-        PasswordAskDTO dto = new PasswordAskDTO();
-        dto.setPassword(password);
-        return dto;
+        return new PasswordAskDTO(password);
     }
 
     @Nested

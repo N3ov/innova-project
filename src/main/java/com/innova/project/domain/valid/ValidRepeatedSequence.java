@@ -1,5 +1,6 @@
 package com.innova.project.domain.valid;
 
+import com.innova.project.infrastructure.exception.PasswordAsserts;
 import com.innova.project.infrastructure.exception.PasswordValidateException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
@@ -22,11 +23,10 @@ public class ValidRepeatedSequence implements PasswordValidation {
                 mapToObj(i -> (char) i).
                 collect(Collectors.toSet());
 
-        if (characterSet.size() != password.length()) {
-            throw new PasswordValidateException(
-                    PASSWORD_HAS_REPEATED_SEQUENCE,
-                    PASSWORD_REPEATED_SEQUENCE_EXCEPTION
-            );
-        }
+        PasswordAsserts.isTrue(
+                characterSet.size() == password.length(),
+                PASSWORD_HAS_REPEATED_SEQUENCE,
+                PASSWORD_REPEATED_SEQUENCE_EXCEPTION
+        );
     }
 }

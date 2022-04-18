@@ -15,7 +15,6 @@ import java.util.Set;
 @Validated
 @RequiredArgsConstructor
 public class PasswordService {
-
     private Set<PasswordValidation> validations;
 
     @Autowired

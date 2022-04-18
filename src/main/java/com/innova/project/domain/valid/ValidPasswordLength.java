@@ -1,5 +1,6 @@
 package com.innova.project.domain.valid;
 
+import com.innova.project.infrastructure.exception.PasswordAsserts;
 import com.innova.project.infrastructure.exception.PasswordValidateException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
@@ -15,12 +16,11 @@ public class ValidPasswordLength implements PasswordValidation {
     @Override
     public void verify(@NotBlank String password) {
 
-        if (password.length() < 5 || password.length() > 12) {
-            throw new PasswordValidateException(
-                    PASSWORD_LENGTH_DOES_NOT_MATCH,
-                    PASSWORD_LENGTH_DOES_NOT_MATCH_EXCEPTION
-            );
-        }
+        PasswordAsserts.isFalse(
+                password.length() < 5 || password.length() > 12,
+                PASSWORD_LENGTH_DOES_NOT_MATCH,
+                PASSWORD_LENGTH_DOES_NOT_MATCH_EXCEPTION
+        );
 
     }
 }

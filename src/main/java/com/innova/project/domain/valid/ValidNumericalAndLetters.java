@@ -1,6 +1,6 @@
 package com.innova.project.domain.valid;
 
-import com.innova.project.infrastructure.exception.PasswordValidateException;
+import com.innova.project.infrastructure.exception.PasswordAsserts;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
@@ -23,11 +23,10 @@ public class ValidNumericalAndLetters implements PasswordValidation {
         Pattern pattern = Pattern.compile(DIGITS_AND_LOWER_CASE_REG);
         Matcher matcher = pattern.matcher(password);
 
-        if (!matcher.matches()) {
-            throw new PasswordValidateException(
-                    PASSWORD_MUST_CONSIST_OF_NUMERICAL_DIGITS_AND_LOWERCASE_LETTERS,
-                    PASSWORD_NUMERICAL_DIGITS_AND_LOWERCASE_LETTERS_EXCEPTION
-            );
-        }
+        PasswordAsserts.isTrue(
+                matcher.matches(),
+                PASSWORD_MUST_CONSIST_OF_NUMERICAL_DIGITS_AND_LOWERCASE_LETTERS,
+                PASSWORD_NUMERICAL_DIGITS_AND_LOWERCASE_LETTERS_EXCEPTION
+        );
     }
 }
